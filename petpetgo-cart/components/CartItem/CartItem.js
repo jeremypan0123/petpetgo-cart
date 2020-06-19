@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Card, Elevation } from '@blueprintjs/core';
+import { Button, Card, Elevation, Alert } from '@blueprintjs/core';
 import styled from 'styled-components';
 
 import { GlobalContext } from '../../contexts';
@@ -13,6 +13,14 @@ const CartItem = (props) => {
     ...rest
   } = props;
 
+  const [deleteAlertOpen, setDeleteAlertOpen] = React.useState(false);
+  const openDeleteAlert = () => {
+    setDeleteAlertOpen(true);
+  };
+  const closeDeleteAlert = () => {
+    setDeleteAlertOpen(false);
+  };
+
   const { dispatch } = React.useContext(GlobalContext);
 
   const increaseAmount = () => {
@@ -20,10 +28,14 @@ const CartItem = (props) => {
   };
 
   const decreaseAmount = () => {
-    dispatch({
-      type: types.ADJUST_ITEM_AMOUNT,
-      payload: { id: id, count: -1 },
-    });
+    if (purchaseAmount === 1) {
+      openDeleteAlert();
+    } else {
+      dispatch({
+        type: types.ADJUST_ITEM_AMOUNT,
+        payload: { id: id, count: -1 },
+      });
+    }
   };
 
   const deleteItem = () => {
@@ -34,21 +46,36 @@ const CartItem = (props) => {
   };
 
   return (
-    <Card interactive={false} elevation={Elevation.TWO} {...rest}>
-      <h5>
-        <p>{name}</p>
-      </h5>
-      {images.map((image) => (
-        <StyledProductImage src={image} alt={name} />
-      ))}
-      <h6>
-        <Button onClick={decreaseAmount}>-</Button> {purchaseAmount}
-        <Button onClick={increaseAmount}>+</Button>
-        <Button onClick={deleteItem}>Delete</Button>
-      </h6>
-      <h6>total: {amount}</h6>
-      <p>price: {price * purchaseAmount}</p>
-    </Card>
+    <>
+      <Card interactive={false} elevation={Elevation.TWO} {...rest}>
+        <h5>
+          <p>{name}</p>
+        </h5>
+        {images.map((image) => (
+          <StyledProductImage src={image} alt={name} />
+        ))}
+        <h6>
+          <Button onClick={decreaseAmount}>-</Button> {purchaseAmount}
+          <Button onClick={increaseAmount} disabled={purchaseAmount === amount}>
+            +
+          </Button>
+          <Button onClick={openDeleteAlert}>Delete</Button>
+        </h6>
+        <p>amount: {amount}</p>
+        <p>price: {price * purchaseAmount}</p>
+      </Card>
+
+      <Alert
+        isOpen={deleteAlertOpen}
+        canOutsideClickCancel={true}
+        onClose={closeDeleteAlert}
+        onConfirm={deleteItem}
+        cancelButtonText="Cancel"
+        confirmButtonText="Delete"
+      >
+        {`Are you sure you want to delete ${name} ?`}
+      </Alert>
+    </>
   );
 };
 
