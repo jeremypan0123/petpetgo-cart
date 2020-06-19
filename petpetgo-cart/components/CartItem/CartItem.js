@@ -3,11 +3,35 @@ import PropTypes from 'prop-types';
 
 import { Button, Card, Elevation } from '@blueprintjs/core';
 
+import { GlobalContext } from '../../contexts';
+import * as types from '../../Constants/ActionTypes';
+
 const CartItem = (props) => {
   const {
-    item: { name, images, amount, selectedAmount, price },
+    item: { id, name, images, amount, purchaseAmount, price },
     ...rest
   } = props;
+
+  const { dispatch } = React.useContext(GlobalContext);
+
+  const increaseAmount = () => {
+    dispatch({ type: types.ADJUST_ITEM_AMOUNT, payload: { id: id, count: 1 } });
+  };
+
+  const decreaseAmount = () => {
+    dispatch({
+      type: types.ADJUST_ITEM_AMOUNT,
+      payload: { id: id, count: -1 },
+    });
+  };
+
+  const deleteItem = () => {
+    dispatch({
+      type: types.DELETE_ITEM,
+      payload: { id: id },
+    });
+  };
+
   return (
     <Card interactive={false} elevation={Elevation.TWO} {...rest}>
       <h5>
@@ -17,11 +41,12 @@ const CartItem = (props) => {
         <img src={image} alt={name} />
       ))}
       <h6>
-        <Button>-</Button> {selectedAmount}
-        <Button>+</Button>
+        <Button onClick={decreaseAmount}>-</Button> {purchaseAmount}
+        <Button onClick={increaseAmount}>+</Button>
+        <Button onClick={deleteItem}>Delete</Button>
       </h6>
       <h6>total: {amount}</h6>
-      <p>price: {price}</p>
+      <p>price: {price * purchaseAmount}</p>
     </Card>
   );
 };

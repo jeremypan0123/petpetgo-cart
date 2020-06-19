@@ -23,7 +23,7 @@ export const createMockCartItems = (amount) => {
       name: `product-${i}`,
       images: [],
       amount: 999,
-      selectedAmount: 1,
+      purchaseAmount: 1,
       price: i,
     });
   }

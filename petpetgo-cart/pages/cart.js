@@ -4,14 +4,20 @@ import Head from 'next/head';
 import { getLayout } from '../layouts/Visitor';
 import CartItem from '../components/CartItem';
 import Product from '../components/Product';
-import {
-  createMockProducts,
-  createMockCartItems,
-} from '../helpers/createMockData';
+import { createMockProducts } from '../helpers/createMockData';
+import { GlobalContext } from '../contexts';
 
 const CartPage = () => {
-  const products = createMockProducts(5);
-  const cartItems = createMockCartItems(2);
+  const { state, dispatch } = React.useContext(GlobalContext);
+  // Extract the state of cart
+  const { cart } = state;
+  const [products, setProducts] = React.useState([]);
+
+  // const cartItems = createMockCartItems(2);
+
+  React.useEffect(() => {
+    setProducts(createMockProducts(5));
+  }, []);
 
   return (
     <>
@@ -21,7 +27,7 @@ const CartPage = () => {
       </Head>
 
       <p>Cart Items</p>
-      {cartItems.map((cartIten) => (
+      {cart.items.map((cartIten) => (
         <CartItem item={cartIten} key={cartIten.id} />
       ))}
 

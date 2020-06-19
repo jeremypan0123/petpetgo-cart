@@ -24,7 +24,6 @@ const useLocalStorage = (key, initialValue) => {
       isFirstRender.current = false;
     } else {
       try {
-        console.log(storedValue);
         // convert object to string and store in local storage
         const valueToStore = JSON.stringify(storedValue);
         if (window.localStorage.getItem(key) !== valueToStore) {
