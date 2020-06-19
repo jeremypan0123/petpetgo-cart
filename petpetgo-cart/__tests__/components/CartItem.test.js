@@ -10,7 +10,7 @@ const cartItem = {
   name: 'Mock CartItem',
   images: [],
   amount: 999,
-  selectedAmount: 1,
+  purchaseAmount: 1,
   price: 999,
 };
 

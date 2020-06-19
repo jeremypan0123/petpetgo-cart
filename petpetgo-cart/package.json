@@ -10,16 +10,20 @@
   },
   "dependencies": {
     "@blueprintjs/core": "^3.28.2",
+    "babel-plugin-styled-components": "^1.10.7",
     "next": "9.4.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "styled-components": "^5.1.1"
+    "styled-components": "^5.1.1",
+    "use-root-reducer": "^1.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.10.1",
     "@testing-library/react": "^10.2.1",
+    "@testing-library/react-hooks": "^3.3.0",
     "babel-jest": "^26.0.1",
     "jest": "^26.0.1",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "react-test-renderer": "^16.13.1"
   }
 }
