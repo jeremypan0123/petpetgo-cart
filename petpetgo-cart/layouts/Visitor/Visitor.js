@@ -1,13 +1,24 @@
 import * as React from 'react';
 import Link from 'next/link';
 
-import { Navbar, Alignment, Button } from '@blueprintjs/core';
-
+import { Navbar, Alignment, Button, Alert } from '@blueprintjs/core';
 import styled from 'styled-components';
+
+import { GlobalContext } from '../../contexts';
+import * as types from '../../constants/ActionTypes';
 
 // default layout for visitor
 const VisitorLayout = (props) => {
   const { children } = props;
+  const {
+    state: { error },
+    dispatch,
+  } = React.useContext(GlobalContext);
+
+  const closeErrorAlert = () => {
+    dispatch({ type: types.CLEAN_ERROR });
+  };
+
   return (
     <div>
       <nav>
@@ -31,6 +42,16 @@ const VisitorLayout = (props) => {
       <main>
         <StyledContainer>{children}</StyledContainer>
       </main>
+
+      <Alert
+        isOpen={Boolean(error)}
+        canOutsideClickCancel={true}
+        onClose={closeErrorAlert}
+        onConfirm={closeErrorAlert}
+        confirmButtonText="Got it"
+      >
+        {error && `${error.message}`}
+      </Alert>
     </div>
   );
 };
