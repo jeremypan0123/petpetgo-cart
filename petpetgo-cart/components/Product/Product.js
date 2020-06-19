@@ -2,6 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 
 import { Button, Card, Elevation } from '@blueprintjs/core';
+import styled from 'styled-components';
 
 import { GlobalContext } from '../../contexts';
 import * as types from '../../Constants/ActionTypes';
@@ -41,7 +42,7 @@ const Product = (props) => {
         <p>{name}</p>
       </h5>
       {images.map((image) => (
-        <img src={image} alt={name} />
+        <StyledProductImage src={image} alt={name} />
       ))}
       <h6>
         <Button onClick={decreaseAmount} disabled={amountDisabled}>
@@ -54,7 +55,10 @@ const Product = (props) => {
       </h6>
       <p>amount: {amount}</p>
       <p>price: {price}</p>
-      <Button onClick={() => addProductToCart(id, purchaseAmount)}>
+      <Button
+        onClick={() => addProductToCart(id, purchaseAmount)}
+        disabled={amountDisabled}
+      >
         Add to cart
       </Button>
     </Card>
@@ -64,5 +68,15 @@ const Product = (props) => {
 Product.propTypes = {
   product: PropTypes.object.isRequired,
 };
+
+const StyledProductImage = styled.div`
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background: url(${(props) => props.src}) no-repeat;
+  background-size: 48px 48px;
+  box-sizing: border-box;
+  padding: 1px;
+`;
 
 export default Product;

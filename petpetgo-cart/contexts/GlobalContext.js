@@ -19,8 +19,6 @@ export default function GlobalContextProvider(props) {
     cart: React.useReducer(cartReducer, cartInLocalStorage),
   });
 
-  // const [state, dispatch] = React.useReducer(cartReducer, cartInLocalStorage);
-
   React.useEffect(() => {
     // set carts into local storage
     setCartInLocalStorage(state.cart);
