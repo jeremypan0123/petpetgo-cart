@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as types from '../Constants/ActionTypes';
+import * as types from '../constants/ActionTypes';
 
 // the state of cart should be:
 // {
@@ -13,14 +13,9 @@ import * as types from '../Constants/ActionTypes';
 //   ],
 // }
 export default function cartReducer(state, action) {
-  let newState = { ...state };
-  const itemIndex = newState.items.findIndex(
-    (item) => item.id === action.payload.id,
-  );
-
+  let newState, itemIndex;
   switch (action.type) {
     case types.ADD_ITEM:
-      console.log('enter add item');
       // action should be
       // {
       //   type,
@@ -31,6 +26,10 @@ export default function cartReducer(state, action) {
       // }
 
       // check the product has been added into cart or not
+      newState = { ...state };
+      itemIndex = newState.items.findIndex(
+        (item) => item.id === action.payload.id,
+      );
       if (itemIndex !== -1) {
         newState.items[itemIndex].purchaseAmount +=
           action.payload.purchaseAmount;
@@ -40,15 +39,27 @@ export default function cartReducer(state, action) {
       return newState;
     case types.ADJUST_ITEM_AMOUNT:
       // check the product has been added into cart or not
+      newState = { ...state };
+      itemIndex = newState.items.findIndex(
+        (item) => item.id === action.payload.id,
+      );
       if (itemIndex !== -1) {
         newState.items[itemIndex].purchaseAmount += action.payload.count;
       }
       return newState;
     case types.DELETE_ITEM:
+      newState = { ...state };
+      itemIndex = newState.items.findIndex(
+        (item) => item.id === action.payload.id,
+      );
       if (itemIndex !== -1) {
         newState.items.splice(itemIndex, 1);
       }
       return newState;
+    case types.CLEAR_CART:
+      return {
+        items: [],
+      };
     default:
       return state;
   }

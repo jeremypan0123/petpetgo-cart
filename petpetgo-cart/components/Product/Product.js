@@ -5,7 +5,7 @@ import { Button, Card, Elevation } from '@blueprintjs/core';
 import styled from 'styled-components';
 
 import { GlobalContext } from '../../contexts';
-import * as types from '../../Constants/ActionTypes';
+import * as types from '../../constants/ActionTypes';
 import { fetchProductById } from '../../helpers/fetchProductById';
 
 const Product = (props) => {
@@ -42,7 +42,7 @@ const Product = (props) => {
         <p>{name}</p>
       </h5>
       {images.map((image) => (
-        <StyledProductImage src={image} alt={name} />
+        <StyledProductImage src={image} alt={name} key={image} />
       ))}
       <h6>
         <Button onClick={decreaseAmount} disabled={amountDisabled}>

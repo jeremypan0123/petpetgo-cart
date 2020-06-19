@@ -5,7 +5,7 @@ import { Button, Card, Elevation, Alert } from '@blueprintjs/core';
 import styled from 'styled-components';
 
 import { GlobalContext } from '../../contexts';
-import * as types from '../../Constants/ActionTypes';
+import * as types from '../../constants/ActionTypes';
 
 const CartItem = (props) => {
   const {
@@ -52,7 +52,7 @@ const CartItem = (props) => {
           <p>{name}</p>
         </h5>
         {images.map((image) => (
-          <StyledProductImage src={image} alt={name} />
+          <StyledProductImage src={image} alt={name} key={image} />
         ))}
         <h6>
           <Button onClick={decreaseAmount}>-</Button> {purchaseAmount}
