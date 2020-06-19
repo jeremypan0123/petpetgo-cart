@@ -1,6 +1,10 @@
-export const createMockProducts = (amount) => {
-  return mockProducts;
-};
+export function createMockProducts(amount) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(mockProducts);
+    }, 2000);
+  });
+}
 
 export const createMockCartItems = (amount) => {
   let items = [];

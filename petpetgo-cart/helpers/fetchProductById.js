@@ -13,7 +13,7 @@ export function fetchProductById(ids) {
           resolve(mockProducts.find((product) => product.id === ids));
         }
       } catch (err) {
-        return err;
+        reject(err);
       }
     }, 2000);
   });

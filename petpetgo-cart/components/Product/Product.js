@@ -22,10 +22,15 @@ const Product = (props) => {
 
   const addProductToCart = async (id, purchaseAmount) => {
     setAmountDisabled(true);
-    const product = await fetchProductById(id);
-    product.purchaseAmount = purchaseAmount;
-    dispatch({ type: types.ADD_ITEM, payload: product });
-    setAmountDisabled(false);
+    try {
+      const product = await fetchProductById(id);
+      product.purchaseAmount = purchaseAmount;
+      dispatch({ type: types.ADD_ITEM, payload: product });
+    } catch (err) {
+      dispatch({ type: types.GENERAL_ERROR, payload: { message: err } });
+    } finally {
+      setAmountDisabled(false);
+    }
   };
 
   const increaseAmount = () => {
@@ -45,11 +50,17 @@ const Product = (props) => {
         <StyledProductImage src={image} alt={name} key={image} />
       ))}
       <h6>
-        <Button onClick={decreaseAmount} disabled={amountDisabled}>
+        <Button
+          onClick={decreaseAmount}
+          disabled={amountDisabled || purchaseAmount === 1}
+        >
           -
         </Button>{' '}
         {purchaseAmount}
-        <Button onClick={increaseAmount} disabled={amountDisabled}>
+        <Button
+          onClick={increaseAmount}
+          disabled={amountDisabled || purchaseAmount === amount}
+        >
           +
         </Button>
       </h6>

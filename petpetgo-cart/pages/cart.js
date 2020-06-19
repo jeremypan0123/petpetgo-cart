@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Router from 'next/router';
 
-import { Card, Elevation, Spinner, Intent, Alert } from '@blueprintjs/core';
+import { Card, Elevation, Spinner, Intent } from '@blueprintjs/core';
 import styled from 'styled-components';
 
 import { getLayout } from '../layouts/Visitor';
@@ -13,6 +13,7 @@ import { GlobalContext } from '../contexts';
 import { createMockProducts } from '../helpers/createMockData';
 import { mockCheckout } from '../helpers/checkout';
 import * as types from '../constants/ActionTypes';
+import ProductList from '../components/ProductList';
 
 const CartPage = () => {
   const { state, dispatch } = React.useContext(GlobalContext);
@@ -60,9 +61,7 @@ const CartPage = () => {
           ))}
 
           <p>Products</p>
-          {products.map((product) => (
-            <Product product={product} key={product.id} />
-          ))}
+          <ProductList />
         </StyledContentWrapper>
 
         <StyledCheckout>
