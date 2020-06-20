@@ -5,7 +5,7 @@ import { Button, Card, Elevation, Alert } from '@blueprintjs/core';
 import styled from 'styled-components';
 
 import { GlobalContext } from '../../contexts';
-import * as types from '../../constants/ActionTypes';
+import * as types from '../../constantss/ActionTypes';
 
 const CartItem = (props) => {
   const {

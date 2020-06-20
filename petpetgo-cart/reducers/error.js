@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as types from '../constants/ActionTypes';
+import * as types from '../constantss/ActionTypes';
 
 export default function errorReducer(state, action) {
   switch (action.type) {
