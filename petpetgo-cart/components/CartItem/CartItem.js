@@ -10,6 +10,8 @@ import * as types from '../../constants/ActionTypes';
 const CartItem = (props) => {
   const {
     item: { id, name, images, amount, purchaseAmount, price },
+    onChange,
+    disableChangeAmount,
     ...rest
   } = props;
 
@@ -25,6 +27,8 @@ const CartItem = (props) => {
 
   const increaseAmount = () => {
     dispatch({ type: types.ADJUST_ITEM_AMOUNT, payload: { id: id, count: 1 } });
+
+    onChange();
   };
 
   const decreaseAmount = () => {
@@ -35,6 +39,8 @@ const CartItem = (props) => {
         type: types.ADJUST_ITEM_AMOUNT,
         payload: { id: id, count: -1 },
       });
+
+      onChange();
     }
   };
 
@@ -55,8 +61,14 @@ const CartItem = (props) => {
           <StyledProductImage src={image} alt={name} key={image} />
         ))}
         <h6>
-          <Button onClick={decreaseAmount}>-</Button> {purchaseAmount}
-          <Button onClick={increaseAmount} disabled={purchaseAmount === amount}>
+          <Button onClick={decreaseAmount} disabled={disableChangeAmount}>
+            -
+          </Button>{' '}
+          {purchaseAmount}
+          <Button
+            onClick={increaseAmount}
+            disabled={disableChangeAmount || purchaseAmount === amount}
+          >
             +
           </Button>
           <Button onClick={openDeleteAlert}>Delete</Button>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { Navbar, Alignment, Button, Alert } from '@blueprintjs/core';
 import styled from 'styled-components';
@@ -19,6 +20,8 @@ const VisitorLayout = (props) => {
     dispatch({ type: types.CLEAN_ERROR });
   };
 
+  const router = useRouter();
+
   return (
     <StyledBody>
       <StyledBanner>
@@ -32,15 +35,27 @@ const VisitorLayout = (props) => {
             </StyledHref>
           </Link>
           <Navbar.Group align={Alignment.RIGHT}>
-            <Link href="/cart">
-              <a>
-                <Button
-                  className="bp3-minimal"
-                  icon="shopping-cart"
-                  text="Cart"
-                />
-              </a>
-            </Link>
+            {router.pathname === '/' ? (
+              <Link href="/cart">
+                <a>
+                  <Button
+                    className="bp3-minimal"
+                    icon="shopping-cart"
+                    text="前往購物車"
+                  />
+                </a>
+              </Link>
+            ) : (
+              <Link href="/">
+                <a>
+                  <Button
+                    className="bp3-minimal"
+                    icon="shopping-cart"
+                    text="前往購物中心"
+                  />
+                </a>
+              </Link>
+            )}
           </Navbar.Group>
         </Navbar>
       </StyledBanner>

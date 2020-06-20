@@ -60,10 +60,6 @@ export default function cartReducer(state, action) {
       return {
         items: [],
       };
-    // sync the latest information of product with product in cart
-    case types.SYNC_PRODUCTS_INFO:
-      state.items = action.payload;
-      return state;
     default:
       return state;
   }
