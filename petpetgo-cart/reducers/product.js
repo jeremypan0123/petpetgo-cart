@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as types from '../constantss/ActionTypes';
+import * as types from '../constants/ActionTypes';
 
 // the state of cart should be:
 // {

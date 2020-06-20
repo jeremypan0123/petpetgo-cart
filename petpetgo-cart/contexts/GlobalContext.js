@@ -4,7 +4,7 @@ import useRootReducer from 'use-root-reducer';
 import { cartReducer, productReducer, errorReducer } from '../reducers';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { queryProductsById } from '../helpers/queryProductsById';
-import * as types from '../constantss/ActionTypes';
+import * as types from '../constants/ActionTypes';
 import { createMockProducts } from '../helpers/createMockData';
 
 export const GlobalContext = React.createContext(null);
