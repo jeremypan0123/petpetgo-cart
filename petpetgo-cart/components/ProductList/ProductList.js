@@ -2,12 +2,16 @@ import * as React from 'react';
 
 import { Spinner } from '@blueprintjs/core';
 
-import useFetchProducts from '../../hooks/useFetchProducts/';
+import { GlobalContext } from '../../contexts';
 import Product from '../Product';
 
 const ProductList = (props) => {
-  const { products, loading, error } = useFetchProducts();
-  console.log(products);
+  const {
+    state: {
+      products: { products, loading, error },
+    },
+  } = React.useContext(GlobalContext);
+
   if (loading) return <Spinner />;
   if (error) return <div>{error.message}</div>;
 

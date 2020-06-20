@@ -1,24 +1,20 @@
 import * as React from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import Router from 'next/router';
 
 import { Card, Elevation, Spinner, Intent } from '@blueprintjs/core';
 import styled from 'styled-components';
 
 import { getLayout } from '../layouts/Visitor';
-import CartItem from '../components/CartItem';
-import Product from '../components/Product';
 import { GlobalContext } from '../contexts';
-import { createMockProducts } from '../helpers/createMockData';
 import { mockCheckout } from '../helpers/checkout';
 import * as types from '../constants/ActionTypes';
 import ProductList from '../components/ProductList';
+import CartList from '../components/CartList';
 
 const CartPage = () => {
   const { state, dispatch } = React.useContext(GlobalContext);
   const { cart } = state;
-  const [products, setProducts] = React.useState([]);
   const [checkouting, setCheckouting] = React.useState(false);
 
   const checkout = async () => {
@@ -42,10 +38,6 @@ const CartPage = () => {
     return total;
   };
 
-  React.useEffect(() => {
-    setProducts(createMockProducts(5));
-  }, []);
-
   return (
     <StyledCart>
       <StyledCartContainer>
@@ -56,9 +48,7 @@ const CartPage = () => {
 
         <StyledContentWrapper>
           <p>Cart</p>
-          {cart.items.map((cartIten) => (
-            <CartItem item={cartIten} key={cartIten.id} />
-          ))}
+          <CartList />
 
           <p>Products</p>
           <ProductList />

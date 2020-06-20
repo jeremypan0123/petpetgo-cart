@@ -1,7 +1,12 @@
 export function createMockProducts(amount) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(mockProducts);
+      resolve(
+        mockProducts.map((product) => ({
+          ...product,
+          disableChangeAmount: false,
+        })),
+      );
     }, 2000);
   });
 }
