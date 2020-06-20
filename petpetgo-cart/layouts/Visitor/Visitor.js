@@ -20,12 +20,17 @@ const VisitorLayout = (props) => {
   };
 
   return (
-    <div>
-      <nav>
+    <StyledBody>
+      <StyledBanner>
         <Navbar>
-          <Navbar.Group align={Alignment.LEFT}>
-            <Navbar.Heading>Petpetgo</Navbar.Heading>
-          </Navbar.Group>
+          <Link href="/">
+            <StyledHref>
+              <Navbar.Group align={Alignment.LEFT}>
+                Petpetgo
+                <Navbar.Heading></Navbar.Heading>
+              </Navbar.Group>
+            </StyledHref>
+          </Link>
           <Navbar.Group align={Alignment.RIGHT}>
             <Link href="/cart">
               <a>
@@ -38,10 +43,10 @@ const VisitorLayout = (props) => {
             </Link>
           </Navbar.Group>
         </Navbar>
-      </nav>
-      <main>
+      </StyledBanner>
+      <StyledMain>
         <StyledContainer>{children}</StyledContainer>
-      </main>
+      </StyledMain>
 
       <Alert
         isOpen={Boolean(error)}
@@ -52,12 +57,34 @@ const VisitorLayout = (props) => {
       >
         {error && `${error.message}`}
       </Alert>
-    </div>
+    </StyledBody>
   );
 };
 
+const StyledBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+`;
+
+const StyledBanner = styled.nav`
+  height: auto;
+`;
+
+const StyledMain = styled.main`
+  flex-grow: 1;
+  overflow: auto;
+`;
+
 const StyledContainer = styled.div`
   padding: 1em;
+  height: 100%;
+`;
+
+const StyledHref = styled.a`
+  text-decoration: none;
+  color: black;
 `;
 
 export const getLayout = (page) => <VisitorLayout>{page}</VisitorLayout>;

@@ -3,7 +3,7 @@ import Head from 'next/head';
 
 import { getLayout } from '../layouts/Visitor';
 
-const CartPage = () => {
+const CheckoutSuccessPage = () => {
   return (
     <>
       <Head>
@@ -16,6 +16,6 @@ const CartPage = () => {
   );
 };
 
-CartPage.getLayout = getLayout;
+CheckoutSuccessPage.getLayout = getLayout;
 
-export default CartPage;
+export default CheckoutSuccessPage;

@@ -10,16 +10,15 @@ import * as types from '../../constants/ActionTypes';
 const Product = (props) => {
   const { product, ...rest } = props;
 
-  const { dispatch, setAddToCart } = React.useContext(GlobalContext);
+  const { dispatch } = React.useContext(GlobalContext);
 
   const [purchaseAmount, setPurchaseAmount] = React.useState(1);
 
   const addProductToCart = () => {
-    try {
-      setAddToCart({ ...product, purchaseAmount });
-    } catch (err) {
-      dispatch({ type: types.GENERAL_ERROR, payload: { message: err } });
-    }
+    dispatch({
+      type: types.ADD_ITEM,
+      payload: { ...product, purchaseAmount },
+    });
   };
 
   const increaseAmount = () => {

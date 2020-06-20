@@ -9,7 +9,6 @@ import { getLayout } from '../layouts/Visitor';
 import { GlobalContext } from '../contexts';
 import { mockCheckout } from '../helpers/checkout';
 import * as types from '../constants/ActionTypes';
-import ProductList from '../components/ProductList';
 import CartList from '../components/CartList';
 
 const CartPage = () => {
@@ -22,8 +21,8 @@ const CartPage = () => {
     try {
       const checkoutRes = await mockCheckout(cart);
       if (checkoutRes.status === 200) {
-        dispatch({ type: types.CLEAR_CART });
         Router.push('/checkoutSuccess');
+        dispatch({ type: types.CLEAR_CART });
       }
     } catch (err) {
       dispatch({ type: types.GENERAL_ERROR, payload: { message: err } });
@@ -39,48 +38,39 @@ const CartPage = () => {
   };
 
   return (
-    <StyledCart>
-      <StyledCartContainer>
-        <Head>
-          <title>Petpetgo - Cart</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-
-        <StyledContentWrapper>
-          <p>Cart</p>
-          <CartList />
-
-          <p>Products</p>
-          <ProductList />
-        </StyledContentWrapper>
-
-        <StyledCheckout>
-          <StyledCheckoutWrapper
-            onClick={checkout}
-            interactive={false}
-            elevation={Elevation.FOUR}
-          >
-            <div>Checkout</div>
-            <div>
-              Total:
-              {checkoutTotal()}
-            </div>
-          </StyledCheckoutWrapper>
-        </StyledCheckout>
-
-        {checkouting && (
-          <StyledSpinnerWrapper>
-            <Spinner intent={Intent.PRIMARY} />
-          </StyledSpinnerWrapper>
-        )}
-      </StyledCartContainer>
-    </StyledCart>
+    <StyledCartContainer>
+      <Head>
+        <title>Petpetgo - Cart</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <StyledContentWrapper>
+        <p>Cart</p>
+        <CartList />
+      </StyledContentWrapper>
+      <StyledCheckoutPlaceholder />
+      <StyledCheckoutWrapper
+        onClick={checkout}
+        interactive={false}
+        elevation={Elevation.FOUR}
+      >
+        <div>
+          <div>Checkout</div>
+          <div>
+            Total:
+            {checkoutTotal()}
+          </div>
+        </div>
+      </StyledCheckoutWrapper>
+      {checkouting && (
+        <StyledSpinnerWrapper>
+          <Spinner intent={Intent.PRIMARY} />
+        </StyledSpinnerWrapper>
+      )}
+    </StyledCartContainer>
   );
 };
 
 CartPage.getLayout = getLayout;
-
-const StyledCart = styled.div``;
 
 const StyledCartContainer = styled.div`
   display: flex;
@@ -89,19 +79,23 @@ const StyledCartContainer = styled.div`
   align-items: center;
 `;
 
-const StyledContentWrapper = styled.section`
+const StyledContentWrapper = styled.div`
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  text-align: left;
 `;
 
-const StyledCheckout = styled.div`
-  position: sticky;
-  bottom: 0;
+const StyledCheckoutPlaceholder = styled.div`
   width: 100%;
+  height: 5rem;
 `;
 
 const StyledCheckoutWrapper = styled(Card)`
   width: 100%;
-  height: 100%;
+  position: fixed;
+  bottom: 0;
 `;
 
 const StyledSpinnerWrapper = styled.div`

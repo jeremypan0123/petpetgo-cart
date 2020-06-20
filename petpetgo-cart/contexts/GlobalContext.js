@@ -1,11 +1,10 @@
 import * as React from 'react';
 import useRootReducer from 'use-root-reducer';
 
-import { cartReducer, productReducer, errorReducer } from '../reducers';
+import { cartReducer, errorReducer } from '../reducers';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { queryProductsById } from '../helpers/queryProductsById';
 import * as types from '../constants/ActionTypes';
-import { createMockProducts } from '../helpers/createMockData';
 
 export const GlobalContext = React.createContext(null);
 
@@ -17,42 +16,11 @@ export default function GlobalContextProvider(props) {
     items: [],
   });
 
-  const initialProductState = {
-    products: [],
-    loading: false,
-    error: null,
-  };
-
-  const [addToCart, setAddToCart] = React.useState(null);
-
   // combine multiple reducers into one root reducer
   const [state, dispatch] = useRootReducer({
     cart: React.useReducer(cartReducer, cartInLocalStorage),
-    products: React.useReducer(productReducer, initialProductState),
     error: React.useReducer(errorReducer, null),
   });
-
-  // add product to cart
-  React.useEffect(() => {
-    async function syncProductsInfo() {
-      dispatch({
-        type: types.DISABLE_CHANGE_AMOUNT,
-        payload: { id: addToCart.id },
-      });
-      // retrieve the latest information of products in cart
-      const latestProductsInfo = await queryProductsById(addToCart.id);
-      dispatch({
-        type: types.ADD_ITEM,
-        payload: addToCart,
-      });
-      dispatch({
-        type: types.ENABLE_CHANGE_AMOUNT,
-        payload: { id: addToCart.id },
-      });
-    }
-    // sync the latest product information
-    if (addToCart) syncProductsInfo();
-  }, [addToCart]);
 
   // real time sync the latest information of product when the cart is updated
   React.useEffect(() => {
@@ -89,34 +57,8 @@ export default function GlobalContextProvider(props) {
     syncProductsInfo();
   }, [state.cart]);
 
-  // fetch products
-  React.useEffect(() => {
-    let didCancel = false;
-
-    async function fetchProducts() {
-      dispatch({ type: types.FETCH_PRODUCT_START });
-
-      try {
-        const products = await createMockProducts();
-        if (!didCancel) {
-          dispatch({ type: types.FETCH_PRODUCT_SUCCESS, payload: products });
-        }
-      } catch (err) {
-        dispatch({
-          type: types.FETCH_PRODUCT_FAILURE,
-          payload: { message: err },
-        });
-      }
-    }
-    fetchProducts();
-
-    return () => {
-      didCancel = true;
-    };
-  }, []);
-
   return (
-    <GlobalContext.Provider value={{ state, dispatch, setAddToCart }}>
+    <GlobalContext.Provider value={{ state, dispatch }}>
       {children}
     </GlobalContext.Provider>
   );
