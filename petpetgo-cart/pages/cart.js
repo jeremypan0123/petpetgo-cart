@@ -2,7 +2,7 @@ import * as React from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 
-import { Card, Elevation, Spinner, Intent } from '@blueprintjs/core';
+import { Card, Elevation, Spinner, Intent, Alert } from '@blueprintjs/core';
 import styled from 'styled-components';
 
 import { getLayout } from '../layouts/Visitor';
@@ -15,19 +15,30 @@ const CartPage = () => {
   const { state, dispatch } = React.useContext(GlobalContext);
   const { cart } = state;
   const [checkouting, setCheckouting] = React.useState(false);
+  const [checkoutAlertOpen, setCheckoutAlertOpen] = React.useState(false);
+
+  const openCheckoutAlert = () => {
+    setCheckoutAlertOpen(true);
+  };
+  const closeCheckoutAlert = () => {
+    setCheckoutAlertOpen(false);
+  };
 
   const checkout = async () => {
-    setCheckouting(true);
-    try {
-      const checkoutRes = await mockCheckout(cart);
-      if (checkoutRes.status === 200) {
-        Router.push('/checkoutSuccess');
-        dispatch({ type: types.CLEAR_CART });
+    if (checkoutTotal() === 0) {
+      openCheckoutAlert();
+    } else {
+      setCheckouting(true);
+      try {
+        const checkoutRes = await mockCheckout(cart);
+        if (checkoutRes.status === 200) {
+          Router.push('/checkoutSuccess');
+        }
+      } catch (err) {
+        dispatch({ type: types.GENERAL_ERROR, payload: { message: err } });
+      } finally {
+        // setCheckouting(false);
       }
-    } catch (err) {
-      dispatch({ type: types.GENERAL_ERROR, payload: { message: err } });
-    } finally {
-      setCheckouting(false);
     }
   };
 
@@ -38,35 +49,43 @@ const CartPage = () => {
   };
 
   return (
-    <StyledCartContainer>
-      <Head>
-        <title>Petpetgo - 購物車</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <StyledContentWrapper>
-        <p>購物車</p>
-        <CartList />
-      </StyledContentWrapper>
-      <StyledCheckoutPlaceholder />
-      <StyledCheckoutWrapper
-        onClick={checkout}
-        interactive={false}
-        elevation={Elevation.FOUR}
+    <>
+      <StyledCartContainer>
+        <Head>
+          <title>Petpetgo - 購物車</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <StyledContentWrapper>
+          <h3 className="bp3-heading">購物車</h3>
+          <CartList />
+        </StyledContentWrapper>
+        <StyledCheckoutPlaceholder />
+        <StyledCheckoutContainer
+          onClick={checkout}
+          interactive={false}
+          elevation={Elevation.FOUR}
+        >
+          <StyledCheckoutWrapper>
+            <div className="bp3-text-large">結帳</div>
+            <div className="bp3-text-large">{`(總計: ${checkoutTotal()})`}</div>
+          </StyledCheckoutWrapper>
+        </StyledCheckoutContainer>
+        {checkouting && (
+          <StyledSpinnerWrapper>
+            <Spinner intent={Intent.PRIMARY} />
+          </StyledSpinnerWrapper>
+        )}
+      </StyledCartContainer>
+      <Alert
+        isOpen={checkoutAlertOpen}
+        canOutsideClickCancel={true}
+        onClose={closeCheckoutAlert}
+        onConfirm={closeCheckoutAlert}
+        confirmButtonText="知道了"
       >
-        <div>
-          <div>結帳</div>
-          <div>
-            總計:
-            {checkoutTotal()}
-          </div>
-        </div>
-      </StyledCheckoutWrapper>
-      {checkouting && (
-        <StyledSpinnerWrapper>
-          <Spinner intent={Intent.PRIMARY} />
-        </StyledSpinnerWrapper>
-      )}
-    </StyledCartContainer>
+        請先加入商品至購物車
+      </Alert>
+    </>
   );
 };
 
@@ -85,6 +104,7 @@ const StyledContentWrapper = styled.div`
   flex-direction: column;
   height: 80%;
   text-align: left;
+  width: 100%;
 `;
 
 const StyledCheckoutPlaceholder = styled.div`
@@ -92,7 +112,7 @@ const StyledCheckoutPlaceholder = styled.div`
   height: 5rem;
 `;
 
-const StyledCheckoutWrapper = styled(Card)`
+const StyledCheckoutContainer = styled(Card)`
   width: 100%;
   position: fixed;
   bottom: 0;
@@ -110,6 +130,10 @@ const StyledSpinnerWrapper = styled.div`
   align-items: center;
   background: grey;
   opacity: 0.5;
+`;
+
+const StyledCheckoutWrapper = styled.div`
+  text-align: center;
 `;
 
 export default CartPage;

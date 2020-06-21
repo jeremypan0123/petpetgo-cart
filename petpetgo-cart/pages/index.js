@@ -54,7 +54,7 @@ export default function Home() {
       </Head>
 
       <main>
-        <p>商品</p>
+        <h3 className="bp3-heading">商品</h3>
         <ProductList />
       </main>
 
@@ -63,7 +63,6 @@ export default function Home() {
           <Toast {...toast} />
         ))}
       </Toaster>
-      {/* {addProductToCartToast} */}
     </div>
   );
 }

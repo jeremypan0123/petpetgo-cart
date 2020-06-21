@@ -2,8 +2,16 @@ import * as React from 'react';
 import Head from 'next/head';
 
 import { getLayout } from '../layouts/Visitor';
+import { GlobalContext } from '../contexts';
+import * as types from '../constants/ActionTypes';
 
 const CheckoutSuccessPage = () => {
+  const { dispatch } = React.useContext(GlobalContext);
+
+  React.useEffect(() => {
+    dispatch({ type: types.CLEAR_CART });
+  }, []);
+
   return (
     <>
       <Head>
@@ -11,7 +19,7 @@ const CheckoutSuccessPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <p>結帳完成</p>
+      <h4 className="bp3-heading">結帳完成</h4>
     </>
   );
 };

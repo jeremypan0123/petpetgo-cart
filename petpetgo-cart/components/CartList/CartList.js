@@ -26,29 +26,29 @@ const CartList = (props) => {
     }, 500);
   };
 
+  if (!items || items.length === 0) {
+    return <h4 className="bp3-heading">目前沒有商品在購物車中...</h4>;
+  }
+
   return (
-    <>
+    <StyledCartContainer>
       {items.map((item) => (
-        <CartItem item={item} key={item.id} onAmountChange={onAmountChange} />
+        <StyledCartWrapper key={item.id}>
+          <CartItem item={item} onAmountChange={onAmountChange} />
+        </StyledCartWrapper>
       ))}
-    </>
+    </StyledCartContainer>
   );
 };
 
 CartList.propTypes = {};
 
-const StyledSpinnerWrapper = styled.div`
-  z-index: 9999;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: fiex;
-  justify-content: center;
-  align-items: center;
-  background: grey;
-  opacity: 0.5;
+const StyledCartContainer = styled.div`
+  margin: 1em 0;
+`;
+
+const StyledCartWrapper = styled.div`
+  margin: 0.5em 0;
 `;
 
 export default CartList;

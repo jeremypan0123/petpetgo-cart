@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Card, Elevation, Alert } from '@blueprintjs/core';
+import { Button, Card, Elevation, Alert, Dialog } from '@blueprintjs/core';
 import styled from 'styled-components';
 
 import { GlobalContext } from '../../contexts';
@@ -15,6 +15,15 @@ const CartItem = (props) => {
   } = props;
 
   const [deleteAlertOpen, setDeleteAlertOpen] = React.useState(false);
+  const [imageDialog, setImageDialog] = React.useState(null);
+
+  const openImageDialog = (image) => {
+    setImageDialog(image);
+  };
+
+  const closeImageDialog = () => {
+    setImageDialog(null);
+  };
 
   const openDeleteAlert = () => {
     setDeleteAlertOpen(true);
@@ -56,27 +65,62 @@ const CartItem = (props) => {
   return (
     <>
       <Card interactive={false} elevation={Elevation.TWO} {...rest}>
-        <h5>
-          <p>{name}</p>
-        </h5>
-        {images.map((image) => (
-          <StyledProductImage src={image} alt={name} key={image} />
-        ))}
-        <h6>
-          <Button onClick={decreaseAmount} disabled={disableChangeAmount}>
-            -
-          </Button>{' '}
-          {purchaseAmount}
-          <Button
-            onClick={increaseAmount}
-            disabled={disableChangeAmount || purchaseAmount === amount}
+        <h4 className="bp3-heading">{name}</h4>
+        <StyledImageContainer>
+          {images.map((image, index) => (
+            <StyledProductImageWrapper
+              src={image}
+              alt={name}
+              key={image}
+              onClick={() => openImageDialog(image)}
+            />
+          ))}
+
+          <StyledImageDialogWrapper
+            isOpen={Boolean(imageDialog)}
+            onClose={closeImageDialog}
+            title={name}
           >
-            +
-          </Button>
-          <Button onClick={openDeleteAlert}>刪除</Button>
-        </h6>
-        <p>數量: {amount}</p>
-        <p>價格: {price * purchaseAmount}</p>
+            <StyledZoomInImageWrapper src={imageDialog} />
+          </StyledImageDialogWrapper>
+        </StyledImageContainer>
+
+        <StyledBottomContainer>
+          <StyledDelete>
+            <StyledPurchaseAmountContainer>
+              <StyledPurchaseAmountButton
+                onClick={decreaseAmount}
+                disabled={disableChangeAmount}
+              >
+                -
+              </StyledPurchaseAmountButton>
+              <b>{purchaseAmount}</b>
+              <StyledPurchaseAmountButton
+                onClick={increaseAmount}
+                disabled={disableChangeAmount || purchaseAmount === amount}
+              >
+                +
+              </StyledPurchaseAmountButton>
+            </StyledPurchaseAmountContainer>
+            <StyledDeleteButton
+              onClick={openDeleteAlert}
+              disabled={disableChangeAmount}
+              className="bp3-outlined"
+              icon="trash"
+              text="刪除"
+            />
+          </StyledDelete>
+          <StyledAmountAndPrice>
+            <div className="bp3-running-text">
+              <div className="bp3-text-large">
+                <>商品數量: {amount}</>
+              </div>
+              <div className="bp3-text-large">
+                <>商品價錢: {price * purchaseAmount}</>
+              </div>
+            </div>
+          </StyledAmountAndPrice>
+        </StyledBottomContainer>
       </Card>
 
       <Alert
@@ -98,14 +142,71 @@ CartItem.propTypes = {
   onAmountChange: PropTypes.func,
 };
 
-const StyledProductImage = styled.div`
-  display: inline-block;
+const StyledImageContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  no-wrap: wrap;
+`;
+
+const StyledProductImageWrapper = styled.div`
   width: 50px;
   height: 50px;
   background: url(${(props) => props.src}) no-repeat;
   background-size: 48px 48px;
   box-sizing: border-box;
-  padding: 1px;
+  margin-left: 5px;
+`;
+
+const StyledImageDialogWrapper = styled(Dialog)`
+  width: 100%;
+  height: 100%;
+`;
+
+const StyledZoomInImageWrapper = styled.img`
+  margin-top: 1em;
+  border-radius: 20px;
+`;
+
+const StyledBottomContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  wrap: nowrap;
+  margin-top: 1em;
+`;
+
+const StyledDelete = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+`;
+
+const StyledAmountAndPrice = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  text-align: left;
+`;
+
+const StyledPurchaseAmountContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+`;
+
+const StyledDeleteButton = styled(Button)`
+  width: 100%;
+  margin-top: 1em;
+`;
+
+const StyledPurchaseAmountButton = styled(Button)`
+  border-radius: 50%;
 `;
 
 export default CartItem;

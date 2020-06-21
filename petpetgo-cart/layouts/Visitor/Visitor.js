@@ -29,7 +29,7 @@ const VisitorLayout = (props) => {
           <Link href="/">
             <StyledHref>
               <Navbar.Group align={Alignment.LEFT}>
-                Petpetgo
+                <div className="bp3-text-large">Petpetgo</div>
                 <Navbar.Heading></Navbar.Heading>
               </Navbar.Group>
             </StyledHref>
