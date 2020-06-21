@@ -89,6 +89,7 @@ const StyledBanner = styled.nav`
 const StyledMain = styled.main`
   flex-grow: 1;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 `;
 
 const StyledContainer = styled.div`

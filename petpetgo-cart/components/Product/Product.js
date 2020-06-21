@@ -147,6 +147,8 @@ const StyledImageDialogWrapper = styled(Dialog)`
 const StyledZoomInImageWrapper = styled.img`
   margin-top: 1em;
   border-radius: 20px;
+  width: 100%;
+  height: 100%;
 `;
 
 const StyledBottomContainer = styled.div`
