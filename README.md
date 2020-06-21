@@ -1,5 +1,5 @@
 # petpetgo-cart
-For demo
+實作電商購物車界面，包含增減商品、調整商品數量與計算總價
 
 # 完成的功能:
 
@@ -57,6 +57,6 @@ For demo
 
     ✅ 1. 自行建立專案或使用 create-react-app 套件，並上傳至自己的 github
     
-    ✅ 2. 使用 [codesandbox](https://codesandbox.io/) 建置專案
+    2. 使用 [codesandbox](https://codesandbox.io/) 建置專案
     
 ✅ 8. 請在五天內交回作業內容
