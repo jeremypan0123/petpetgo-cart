@@ -79,11 +79,9 @@ const VisitorLayout = (props) => {
 const StyledBody = styled.div`
   display: flex;
   flex-direction: column;
-  // height: 100vh;
 `;
 
 const StyledBanner = styled.header`
-  // height: auto;
   position: fixed;
   top: 0;
   width: 100%;
@@ -93,8 +91,8 @@ const StyledBanner = styled.header`
 
 const StyledMain = styled.main`
   flex-grow: 1;
-  overflow: auto;
   -webkit-overflow-scrolling: touch;
+  margin-top: 50px;
 `;
 
 const StyledContainer = styled.div`
