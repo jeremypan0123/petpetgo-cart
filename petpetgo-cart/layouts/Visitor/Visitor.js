@@ -79,11 +79,16 @@ const VisitorLayout = (props) => {
 const StyledBody = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  // height: 100vh;
 `;
 
-const StyledBanner = styled.nav`
-  height: auto;
+const StyledBanner = styled.header`
+  // height: auto;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  z-index: 10;
 `;
 
 const StyledMain = styled.main`
