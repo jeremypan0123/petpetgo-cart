@@ -4,7 +4,6 @@ export function createMockProducts(amount) {
       resolve(
         mockProducts.map((product) => ({
           ...product,
-          disableChangeAmount: false,
         })),
       );
     }, 2000);

@@ -53,11 +53,32 @@ export default function GlobalContextProvider(props) {
     let didCancel = false;
     async function doSomething() {
       try {
+        // find the purchaseAmount in cart
+        const itemInCart = state.cart.items.find(
+          (item) => item.id === state.addProductToCart.product.id,
+        );
+        const purchaseAmountInCart = itemInCart ? itemInCart.purchaseAmount : 0;
+        let correctPurchaseAmount =
+          state.addProductToCart.product.purchaseAmount;
+        // check the purchaseAmount + the purchaseAmount in cart is greater than amount or not
+        if (
+          state.addProductToCart.product.purchaseAmount + purchaseAmountInCart >
+          state.addProductToCart.product.amount
+        ) {
+          correctPurchaseAmount =
+            state.addProductToCart.product.amount - purchaseAmountInCart;
+        }
+
         await doSomethingAsync(500);
         if (!didCancel) {
           dispatch({
             type: types.ADD_ITEM,
-            payload: { product: { ...state.addProductToCart.product } },
+            payload: {
+              product: {
+                ...state.addProductToCart.product,
+                purchaseAmount: correctPurchaseAmount,
+              },
+            },
           });
           dispatch({
             type: types.ADD_PRODUCT_TO_CART_SUCCESS,

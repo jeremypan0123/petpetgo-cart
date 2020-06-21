@@ -12,7 +12,15 @@ export default function Home() {
     dispatch,
   } = React.useContext(GlobalContext);
 
-  let addProductToCartStatusToast = null;
+  const toasts = React.useRef([]);
+  const toaster = React.useRef(null);
+  const refHandlers = React.useRef({
+    toaster: (ref) => (toaster.current = ref),
+  });
+
+  const addToast = (msg) => {
+    toaster.current.show({ message: msg });
+  };
 
   // is checking
   if (addProductToCart.checking) {
@@ -20,7 +28,7 @@ export default function Home() {
   }
   // error
   if (addProductToCart.error) {
-    console.log('something went wrong...');
+    addToast(addProductToCart.error);
   }
   // success
   if (
@@ -28,7 +36,7 @@ export default function Home() {
     !addProductToCart.checking &&
     !addProductToCart.error
   ) {
-    console.log('addProductToCart success!!!');
+    addToast(`已成功加入 ${addProductToCart.product.name} 至購物車!`);
   }
 
   // To avoid keeping prompting add cart success toast, reset the addProductToCart when unmounting
@@ -49,7 +57,13 @@ export default function Home() {
         <p>商品</p>
         <ProductList />
       </main>
-      {addProductToCartStatusToast}
+
+      <Toaster position={Position.TOP} ref={refHandlers.current.toaster}>
+        {toasts.current.map((toast) => (
+          <Toast {...toast} />
+        ))}
+      </Toaster>
+      {/* {addProductToCartToast} */}
     </div>
   );
 }

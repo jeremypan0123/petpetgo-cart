@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Card, Elevation, Toast } from '@blueprintjs/core';
+import { Button, Card, Elevation } from '@blueprintjs/core';
 import styled from 'styled-components';
 
 import { GlobalContext } from '../../contexts';
@@ -10,11 +10,14 @@ import * as types from '../../constants/ActionTypes';
 const Product = (props) => {
   const { product, ...rest } = props;
 
-  const { dispatch } = React.useContext(GlobalContext);
+  const {
+    state: { addProductToCart },
+    dispatch,
+  } = React.useContext(GlobalContext);
 
   const [purchaseAmount, setPurchaseAmount] = React.useState(1);
 
-  const addProductToCart = () => {
+  const addProductToCartFunc = () => {
     dispatch({
       type: types.ADD_PRODUCT_TO_CART,
       payload: { product: { ...product, purchaseAmount } },
@@ -40,7 +43,11 @@ const Product = (props) => {
       <h6>
         <Button
           onClick={decreaseAmount}
-          disabled={product.disableChangeAmount || purchaseAmount === 1}
+          disabled={
+            (addProductToCart.checking &&
+              addProductToCart.product.id === product.id) ||
+            purchaseAmount === 1
+          }
         >
           -
         </Button>{' '}
@@ -48,7 +55,9 @@ const Product = (props) => {
         <Button
           onClick={increaseAmount}
           disabled={
-            product.disableChangeAmount || purchaseAmount === product.amount
+            (addProductToCart.checking &&
+              addProductToCart.product.id === product.id) ||
+            purchaseAmount === product.amount
           }
         >
           +
@@ -56,7 +65,13 @@ const Product = (props) => {
       </h6>
       <p>商品數量: {product.amount}</p>
       <p>商品價錢: {product.price}</p>
-      <Button onClick={addProductToCart} disabled={product.disableChangeAmount}>
+      <Button
+        onClick={addProductToCartFunc}
+        disabled={
+          addProductToCart.checking &&
+          addProductToCart.product.id === product.id
+        }
+      >
         加入購物車
       </Button>
     </Card>
