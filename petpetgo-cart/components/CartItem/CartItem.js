@@ -131,7 +131,7 @@ const CartItem = (props) => {
         cancelButtonText="Cancel"
         confirmButtonText="Delete"
       >
-        {`Are you sure you want to delete ${name} ?`}
+        {`確定要刪除 ${name} ?`}
       </Alert>
     </>
   );
