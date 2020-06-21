@@ -7,11 +7,11 @@ const CheckoutSuccessPage = () => {
   return (
     <>
       <Head>
-        <title>Petpetgo - Checkout Success</title>
+        <title>Petpetgo - 結帳完成</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <p>Checkout Success</p>
+      <p>結帳完成</p>
     </>
   );
 };

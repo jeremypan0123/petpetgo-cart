@@ -10,12 +10,12 @@ import * as types from '../../constants/ActionTypes';
 const CartItem = (props) => {
   const {
     item: { id, name, images, amount, purchaseAmount, price },
-    onChange,
-    disableChangeAmount,
+    onAmountChange,
     ...rest
   } = props;
 
   const [deleteAlertOpen, setDeleteAlertOpen] = React.useState(false);
+
   const openDeleteAlert = () => {
     setDeleteAlertOpen(true);
   };
@@ -23,12 +23,15 @@ const CartItem = (props) => {
     setDeleteAlertOpen(false);
   };
 
-  const { dispatch } = React.useContext(GlobalContext);
+  const { state, dispatch } = React.useContext(GlobalContext);
+  const { disableChangeAmount } = state;
 
   const increaseAmount = () => {
-    dispatch({ type: types.ADJUST_ITEM_AMOUNT, payload: { id: id, count: 1 } });
-
-    onChange();
+    dispatch({
+      type: types.ADJUST_ITEM_AMOUNT,
+      payload: { id: id, count: 1 },
+    });
+    if (onAmountChange) onAmountChange();
   };
 
   const decreaseAmount = () => {
@@ -39,8 +42,7 @@ const CartItem = (props) => {
         type: types.ADJUST_ITEM_AMOUNT,
         payload: { id: id, count: -1 },
       });
-
-      onChange();
+      if (onAmountChange) onAmountChange();
     }
   };
 
@@ -71,10 +73,10 @@ const CartItem = (props) => {
           >
             +
           </Button>
-          <Button onClick={openDeleteAlert}>Delete</Button>
+          <Button onClick={openDeleteAlert}>刪除</Button>
         </h6>
-        <p>amount: {amount}</p>
-        <p>price: {price * purchaseAmount}</p>
+        <p>數量: {amount}</p>
+        <p>價格: {price * purchaseAmount}</p>
       </Card>
 
       <Alert
@@ -93,6 +95,7 @@ const CartItem = (props) => {
 
 CartItem.propTypes = {
   item: PropTypes.object.isRequired,
+  onAmountChange: PropTypes.func,
 };
 
 const StyledProductImage = styled.div`

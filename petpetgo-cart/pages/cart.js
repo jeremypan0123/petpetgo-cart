@@ -40,11 +40,11 @@ const CartPage = () => {
   return (
     <StyledCartContainer>
       <Head>
-        <title>Petpetgo - Cart</title>
+        <title>Petpetgo - 購物車</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <StyledContentWrapper>
-        <p>Cart</p>
+        <p>購物車</p>
         <CartList />
       </StyledContentWrapper>
       <StyledCheckoutPlaceholder />
@@ -54,9 +54,9 @@ const CartPage = () => {
         elevation={Elevation.FOUR}
       >
         <div>
-          <div>Checkout</div>
+          <div>結帳</div>
           <div>
-            Total:
+            總計:
             {checkoutTotal()}
           </div>
         </div>

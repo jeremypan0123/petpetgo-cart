@@ -5,6 +5,7 @@ import {
   cartReducer,
   errorReducer,
   disableChangeAmountReducer,
+  addProductToCartReducer,
 } from '../reducers';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { doSomethingAsync } from '../helpers/doSomethingAsync';
@@ -25,8 +26,14 @@ export default function GlobalContextProvider(props) {
     cart: React.useReducer(cartReducer, cartInLocalStorage),
     error: React.useReducer(errorReducer, null),
     disableChangeAmount: React.useReducer(disableChangeAmountReducer, false),
+    addProductToCart: React.useReducer(addProductToCartReducer, {
+      product: null,
+      checking: false,
+      error: null,
+    }),
   });
 
+  // Change amount in cart handler
   React.useEffect(() => {
     async function doSomething() {
       await doSomethingAsync();
@@ -40,6 +47,41 @@ export default function GlobalContextProvider(props) {
       doSomething();
     }
   }, [state.disableChangeAmount]);
+
+  // Add Product to cart handler
+  React.useEffect(() => {
+    let didCancel = false;
+    async function doSomething() {
+      try {
+        await doSomethingAsync(500);
+        if (!didCancel) {
+          dispatch({
+            type: types.ADD_ITEM,
+            payload: { product: { ...state.addProductToCart.product } },
+          });
+          dispatch({
+            type: types.ADD_PRODUCT_TO_CART_SUCCESS,
+            payload: {
+              product: state.addProductToCart.product,
+            },
+          });
+        }
+      } catch (error) {
+        dispatch({
+          type: types.ADD_PRODUCT_TO_CART_FAILURE,
+          payload: { product: state.addProductToCart.product, error },
+        });
+      }
+    }
+
+    if (state.addProductToCart.checking) {
+      doSomething();
+    }
+
+    return () => {
+      didCancel = true;
+    };
+  }, [state.addProductToCart]);
 
   // real time sync the latest information of product when the cart is updated
   // React.useEffect(() => {
@@ -86,6 +128,13 @@ export default function GlobalContextProvider(props) {
   //   // sync the latest product information
   //   syncProductsInfo();
   // }, [state.cart]);
+
+  // set cart in local storage if state.cart is changed
+  React.useEffect(() => {
+    setCartInLocalStorage({
+      ...state.cart,
+    });
+  }, [state.cart]);
 
   return (
     <GlobalContext.Provider value={{ state, dispatch }}>

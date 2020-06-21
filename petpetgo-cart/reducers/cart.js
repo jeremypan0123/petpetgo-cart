@@ -2,12 +2,13 @@ import * as React from 'react';
 
 import * as types from '../constants/ActionTypes';
 
-// the state of cart should be:
+// the state of cart should contains:
 // {
 //   items: [
 //     {
 //       id, // product id
 //       purchaseAmount,  // the amount of the user want to purchase
+//       ...
 //     },
 //     ...
 //   ],
@@ -16,25 +17,16 @@ export default function cartReducer(state, action) {
   let newState, itemIndex;
   switch (action.type) {
     case types.ADD_ITEM:
-      // action should be
-      // {
-      //   type,
-      //   payload: {
-      //    id,
-      //    purchaseAmount
-      //   }
-      // }
-
       // check the product has been added into cart or not
       newState = { ...state };
       itemIndex = newState.items.findIndex(
-        (item) => item.id === action.payload.id,
+        (item) => item.id === action.payload.product.id,
       );
       if (itemIndex !== -1) {
         newState.items[itemIndex].purchaseAmount +=
-          action.payload.purchaseAmount;
+          action.payload.product.purchaseAmount;
       } else {
-        newState.items.push({ ...action.payload });
+        newState.items.push({ ...action.payload.product });
       }
       return newState;
     case types.ADJUST_ITEM_AMOUNT:

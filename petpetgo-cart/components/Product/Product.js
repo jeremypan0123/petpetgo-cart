@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Card, Elevation } from '@blueprintjs/core';
+import { Button, Card, Elevation, Toast } from '@blueprintjs/core';
 import styled from 'styled-components';
 
 import { GlobalContext } from '../../contexts';
@@ -16,8 +16,8 @@ const Product = (props) => {
 
   const addProductToCart = () => {
     dispatch({
-      type: types.ADD_ITEM,
-      payload: { ...product, purchaseAmount },
+      type: types.ADD_PRODUCT_TO_CART,
+      payload: { product: { ...product, purchaseAmount } },
     });
   };
 
@@ -54,10 +54,10 @@ const Product = (props) => {
           +
         </Button>
       </h6>
-      <p>amount: {product.amount}</p>
-      <p>price: {product.price}</p>
+      <p>商品數量: {product.amount}</p>
+      <p>商品價錢: {product.price}</p>
       <Button onClick={addProductToCart} disabled={product.disableChangeAmount}>
-        Add to cart
+        加入購物車
       </Button>
     </Card>
   );

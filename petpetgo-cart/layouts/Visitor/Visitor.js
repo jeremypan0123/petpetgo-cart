@@ -50,7 +50,7 @@ const VisitorLayout = (props) => {
                 <a>
                   <Button
                     className="bp3-minimal"
-                    icon="shopping-cart"
+                    icon="shop"
                     text="前往購物中心"
                   />
                 </a>

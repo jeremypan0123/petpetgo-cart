@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
 
@@ -10,13 +11,12 @@ const CartList = (props) => {
   const { state, dispatch } = React.useContext(GlobalContext);
   const {
     cart: { items },
-    disableChangeAmount,
   } = state;
 
   // set 500ms timer for changes amount
   const timerRef = React.useRef(null);
 
-  const onChange = () => {
+  const onAmountChange = () => {
     // if user change amount in 500ms, reset the timer
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
@@ -29,16 +29,13 @@ const CartList = (props) => {
   return (
     <>
       {items.map((item) => (
-        <CartItem
-          item={item}
-          key={item.id}
-          onChange={onChange}
-          disableChangeAmount={disableChangeAmount}
-        />
+        <CartItem item={item} key={item.id} onAmountChange={onAmountChange} />
       ))}
     </>
   );
 };
+
+CartList.propTypes = {};
 
 const StyledSpinnerWrapper = styled.div`
   z-index: 9999;
