@@ -1,6 +1,9 @@
 # petpetgo-cart
 實作電商購物車界面，包含增減商品、調整商品數量與計算總價
 
+# 使用的架構及UI Library
+React.js / Next.js / Blueprint / Styled Component
+
 # 完成的功能:
 
 ## 功能需求
@@ -60,3 +63,23 @@
     2. 使用 [codesandbox](https://codesandbox.io/) 建置專案
     
 ✅ 8. 請在五天內交回作業內容
+
+## 實做細節
+
+創造一個GlobalContext搭配React.useReducer將state及dispatcher provide給所有的Component, State及Dispatcher的資訊如下:
+
+### State
+| Key | Default Value | Purpose |
+| :---: | :---: | :---: |
+| cart | 從local storage取得購物車資訊, 若無則使用 { items: [] } | 購物車的資訊 |
+| disableChangeAmount | false | 當寫入資料時,設定為true停止購物車裡的調整數量功能 |
+| addProductToCart | {product: null, checking: false, error: null} | 當從商品頁加入Product至購物車時, 藉由checking及error來判斷商品是否成功被加入購物車 |
+| error | null | 當有error發生時, 跳出相對應的error message |
+
+### Dispatcher
+| Reducer | Action | Purpose |
+| :---: | :---: | :---: |
+| cartReducer | 1. ADD_ITEM<br>2. ADJUST_ITEM_AMOUNT<br>3. DELETE_ITEM<br>4. CLEAR_CART | 1. 加入Product到購物車<br>2. 調整物品數量<br>3. 刪除物品<br>4. 清空購物車 |
+| disableChangeAmountReducer | 1. DO_SOMETHING_ASYNC, 2. DO_SOMETHING_ASYNC_SUCCESS | 1. 停止使用修改數量功能 2. 正常使用修改數量功能 | 
+| addProductToCartReducer | 1. ADD_PRODUCT_TO_CART<br>2. ADD_PRODUCT_TO_CART_SUCCESS<br>3. ADD_PRODUCT_TO_CART_FAILURE<br>4. ADD_PRODUCT_TO_CART_RESET | 1. 正在加入產品到購物車<br>2. 成功加入產品到購物車<br>3. 無法將商品加入購物車<br>4. 清空儲存的資訊 |
+| errorReducer | 1. GENERAL_ERROR<br>2. CLEAR_ERROR | 1. 發生錯誤<br>2. 清空儲存的資訊 |
