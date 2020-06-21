@@ -128,8 +128,8 @@ const CartItem = (props) => {
         canOutsideClickCancel={true}
         onClose={closeDeleteAlert}
         onConfirm={deleteItem}
-        cancelButtonText="Cancel"
-        confirmButtonText="Delete"
+        cancelButtonText="取消"
+        confirmButtonText="刪除"
       >
         {`確定要刪除 ${name} ?`}
       </Alert>
