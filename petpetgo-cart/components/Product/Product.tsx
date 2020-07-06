@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { GlobalContext } from '../../contexts';
 import * as types from '../../constants/ActionTypes';
 
-const Product = (props) => {
+const Product = React.memo<ProductProps>((props) => {
   const { product, ...rest } = props;
 
   const {
@@ -18,26 +18,26 @@ const Product = (props) => {
   const [purchaseAmount, setPurchaseAmount] = React.useState(1);
   const [imageDialog, setImageDialog] = React.useState(null);
 
-  const openImageDialog = (image) => {
+  const openImageDialog = (image): void => {
     setImageDialog(image);
   };
 
-  const closeImageDialog = () => {
+  const closeImageDialog = (): void => {
     setImageDialog(null);
   };
 
-  const addProductToCartFunc = () => {
+  const addProductToCartFunc = (): void => {
     dispatch({
       type: types.ADD_PRODUCT_TO_CART,
       payload: { product: { ...product, purchaseAmount } },
     });
   };
 
-  const increaseAmount = () => {
+  const increaseAmount = (): void => {
     setPurchaseAmount((prev) => prev + 1);
   };
 
-  const decreaseAmount = () => {
+  const decreaseAmount = (): void => {
     setPurchaseAmount((prev) => prev - 1);
   };
 
@@ -45,7 +45,7 @@ const Product = (props) => {
     <Card interactive={false} elevation={Elevation.TWO} {...rest}>
       <h4 className="bp3-heading">{product.name}</h4>
       <StyledImageContainer>
-        {product.images.map((image, index) => (
+        {product.images.map((image) => (
           <StyledProductImageWrapper
             src={image}
             alt={product.name}
@@ -113,15 +113,23 @@ const Product = (props) => {
       </StyledBottomContainer>
     </Card>
   );
-};
+});
 
-Product.propTypes = {
-  product: PropTypes.object.isRequired,
-};
+interface ProductProps {
+  product: ProductField;
+}
 
-const StyledCard = styled(Card)`
-  transition: all 450ms ease 0s;
-`;
+interface ProductField {
+  id: number;
+  name: string;
+  images: string[];
+  amount: number;
+  price: number;
+}
+
+// Product.propTypes = {
+//   product: PropTypes.object.isRequired,
+// };
 
 const StyledImageContainer = styled.div`
   display: flex;

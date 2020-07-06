@@ -17,10 +17,10 @@ const CartPage = () => {
   const [checkouting, setCheckouting] = React.useState(false);
   const [checkoutAlertOpen, setCheckoutAlertOpen] = React.useState(false);
 
-  const openCheckoutAlert = () => {
+  const openCheckoutAlert = (): void => {
     setCheckoutAlertOpen(true);
   };
-  const closeCheckoutAlert = () => {
+  const closeCheckoutAlert = (): void => {
     setCheckoutAlertOpen(false);
   };
 
@@ -42,7 +42,7 @@ const CartPage = () => {
     }
   };
 
-  const checkoutTotal = () => {
+  const checkoutTotal = (): number => {
     let total = 0;
     cart.items.map((item) => (total += item.price * item.purchaseAmount));
     return total;

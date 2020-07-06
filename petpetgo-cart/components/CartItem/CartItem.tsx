@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { GlobalContext } from '../../contexts';
 import * as types from '../../constants/ActionTypes';
 
-const CartItem = (props) => {
+const CartItem = React.memo<CartItemProps>((props) => {
   const {
     item: { id, name, images, amount, purchaseAmount, price },
     onAmountChange,
@@ -135,12 +135,26 @@ const CartItem = (props) => {
       </Alert>
     </>
   );
-};
+});
 
-CartItem.propTypes = {
-  item: PropTypes.object.isRequired,
-  onAmountChange: PropTypes.func,
-};
+interface CartItemProps {
+  item: CartItemField;
+  onAmountChange: () => void;
+}
+
+interface CartItemField {
+  id: number;
+  name: string;
+  images: string[];
+  amount: number;
+  purchaseAmount: number;
+  price: number;
+}
+
+// CartItem.propTypes = {
+//   item: PropTypes.object.isRequired,
+//   onAmountChange: PropTypes.func,
+// };
 
 const StyledImageContainer = styled.div`
   display: flex;

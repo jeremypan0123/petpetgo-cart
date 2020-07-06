@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "lint": "eslint"
   },
   "dependencies": {
     "@blueprintjs/core": "^3.28.2",
@@ -22,8 +23,11 @@
     "@testing-library/react": "^10.2.1",
     "@testing-library/react-hooks": "^3.3.0",
     "babel-jest": "^26.0.1",
+    "eslint": "^7.4.0",
+    "eslint-plugin-react": "^7.20.3",
     "jest": "^26.0.1",
     "prettier": "^2.0.5",
-    "react-test-renderer": "^16.13.1"
+    "react-test-renderer": "^16.13.1",
+    "typescript": "^3.9.6"
   }
 }

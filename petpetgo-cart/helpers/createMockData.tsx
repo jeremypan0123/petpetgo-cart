@@ -1,4 +1,4 @@
-export function createMockProducts(amount) {
+export function createMockProducts(amount?: number): Promise<ProductField[]> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(
@@ -26,7 +26,7 @@ export const createMockCartItems = (amount) => {
   return items;
 };
 
-export const mockProducts = [
+export const mockProducts: Array<ProductField> = [
   {
     id: 18567,
     name:
@@ -130,3 +130,11 @@ export const mockProducts = [
     price: 555,
   },
 ];
+
+export interface ProductField {
+  id: Number;
+  name: String;
+  images: Array<String>;
+  amount: Number;
+  price: Number;
+}

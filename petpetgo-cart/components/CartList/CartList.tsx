@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
 
@@ -16,7 +15,7 @@ const CartList = (props) => {
   // set 500ms timer for changes amount
   const timerRef = React.useRef(null);
 
-  const onAmountChange = () => {
+  const onAmountChange = (): void => {
     // if user change amount in 500ms, reset the timer
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
@@ -40,8 +39,6 @@ const CartList = (props) => {
     </StyledCartContainer>
   );
 };
-
-CartList.propTypes = {};
 
 const StyledCartContainer = styled.div`
   margin: 1em 0;

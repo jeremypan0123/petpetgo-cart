@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "es2017"
+    ],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noUnusedParameters": false,
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": false,
+    "target": "es5",
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "corgi/*": ["./src/*"],
+      "fullstack/*": ["../fullstack/*" ]
+    }
+  },
+  "include": [
+    "next.config.js",
+    "**/*.ts",
+    "**/*.tsx",
+    "../fullstack/*.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
