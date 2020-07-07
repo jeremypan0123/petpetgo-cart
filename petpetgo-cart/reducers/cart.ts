@@ -21,25 +21,33 @@ interface Action {
 }
 
 interface ADD_ITEM extends Action {
+	/** 將商品加入購物車 */
 	type: CART_ACTION.ADD_ITEM;
+	/** 將要加入購物車的商品 */
 	payload: { product: CartItemField };
 }
 
 interface ADJUST_ITEM_AMOUNT extends Action {
+	/** 調整購物車內的商品數量 */
 	type: CART_ACTION.ADJUST_ITEM_AMOUNT;
+	/** 商品的unique id與加入購物車的數量 */
 	payload: { id: number; count: number };
 }
 
 interface DELETE_ITEM extends Action {
+	/** 從購物車刪除商品 */
 	type: CART_ACTION.DELETE_ITEM;
+	/** 商品的unique id */
 	payload: { id: number };
 }
 
 interface CLEAR_CART extends Action {
+	/** 清空購物車 */
 	type: CART_ACTION.CLEAR_CART;
 }
 
 export interface CartState {
+	/** 儲存於購物車的商品 */
 	items: CartItemField[];
 }
 

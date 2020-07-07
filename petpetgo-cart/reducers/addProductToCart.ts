@@ -13,27 +13,37 @@ export interface Action {
 }
 
 interface ADD_PRODUCT_TO_CART extends Action {
+	/** 開始將商品加入購物車 */
 	type: ADD_PRODUCT_TO_CART_ACTION.ADD_PRODUCT_TO_CART;
+	/** 商品資訊 */
 	payload: { product: ProductField };
 }
 
 interface ADD_PRODUCT_TO_CART_SUCCESS extends Action {
+	/** 成功將商品加入購物車 */
 	type: ADD_PRODUCT_TO_CART_ACTION.ADD_PRODUCT_TO_CART_SUCCESS;
+	/** 成功加入購物車的商品 */
 	payload: { product: ProductField };
 }
 
 interface ADD_PRODUCT_TO_CART_FAILURE extends Action {
+	/** 無法將商品加入購物車 */
 	type: ADD_PRODUCT_TO_CART_ACTION.ADD_PRODUCT_TO_CART_FAILURE;
+	/** 商品與失敗原因 */
 	payload: { product: ProductField; error: string };
 }
 
 interface ADD_PRODUCT_TO_CART_RESET extends Action {
+	/** 清空加入購物車的狀態 */
 	type: ADD_PRODUCT_TO_CART_ACTION.ADD_PRODUCT_TO_CART_RESET;
 }
 
 interface AddProductToCartState {
+	/** 將要加入購物車的商品 */
 	product: ProductField;
+	/** 是否正在將商品加入購物車 */
 	checking: boolean;
+	/** 無法將商品加入購物車的原因 */
 	error: string | null;
 }
 

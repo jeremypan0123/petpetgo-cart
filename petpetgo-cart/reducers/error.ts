@@ -8,16 +8,21 @@ interface Action {
 }
 
 interface GENERAL_ERROR extends Action {
+	/** 發生Error */
 	type: ERROR_ACTION.GENERAL_ERROR;
+	/** 錯誤訊息 */
 	payload: ErrorState;
 }
 
 interface CLEAN_ERROR extends Action {
+	/** 清空Error */
 	type: ERROR_ACTION.CLEAN_ERROR;
 }
 
 interface ErrorState {
+	/** 錯誤的status code */
 	code?: number;
+	/** 錯誤訊息 */
 	message?: string;
 }
 
