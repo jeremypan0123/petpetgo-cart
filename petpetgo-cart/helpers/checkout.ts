@@ -8,7 +8,9 @@ export interface CheckoutResult {
 	message?: string;
 }
 
-export function mockCheckout(cart): Promise<CheckoutResult> {
+export function mockCheckout(cart: {
+	items: CartItemField[];
+}): Promise<CheckoutResult> {
 	return new Promise((resolve, reject) => {
 		try {
 			setTimeout(() => {

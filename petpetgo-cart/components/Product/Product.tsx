@@ -122,7 +122,7 @@ const StyledImageContainer = styled.div`
 	no-wrap: wrap;
 `;
 
-const StyledProductImageWrapper = styled.div`
+const StyledProductImageWrapper = styled.div<{ src: string; alt: string }>`
 	width: 50px;
 	height: 50px;
 	background: url(${(props) => props.src}) no-repeat;

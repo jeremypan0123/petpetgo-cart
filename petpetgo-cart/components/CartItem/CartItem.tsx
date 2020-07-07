@@ -1,7 +1,10 @@
 import { memo, useState, useContext } from 'react';
 
 import { Button, Card, Elevation, Alert, Dialog } from '@blueprintjs/core';
-import styled from 'styled-components';
+import styled, {
+	ThemedStyledInterface,
+	ThemedStyledFunction,
+} from 'styled-components';
 
 import { GlobalContext } from '../../contexts';
 import { CART_ACTION } from '../../constants/ActionTypes';
@@ -144,7 +147,7 @@ const StyledImageContainer = styled.div`
 	no-wrap: wrap;
 `;
 
-const StyledProductImageWrapper = styled.div`
+const StyledProductImageWrapper = styled.div<{ src: string; alt: string }>`
 	width: 50px;
 	height: 50px;
 	background: url(${(props) => props.src}) no-repeat;

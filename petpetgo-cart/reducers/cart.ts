@@ -23,7 +23,7 @@ interface Action {
 
 interface ADD_ITEM extends Action {
 	type: CART_ACTION.ADD_ITEM;
-	payload: { product: ProductField };
+	payload: { product: CartItemField };
 }
 
 interface ADJUST_ITEM_AMOUNT extends Action {

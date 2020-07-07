@@ -19,7 +19,7 @@ export default function Home() {
 		toaster: (ref: unknown) => (toaster.current = ref),
 	});
 
-	const addToast = (msg: string) => {
+	const addToast = (msg: string): void => {
 		toaster.current.show({ message: msg });
 	};
 
