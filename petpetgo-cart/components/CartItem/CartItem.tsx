@@ -1,10 +1,7 @@
 import { memo, useState, useContext } from 'react';
 
 import { Button, Card, Elevation, Alert, Dialog } from '@blueprintjs/core';
-import styled, {
-	ThemedStyledInterface,
-	ThemedStyledFunction,
-} from 'styled-components';
+import styled from 'styled-components';
 
 import { GlobalContext } from '../../contexts';
 import { CART_ACTION } from '../../constants/ActionTypes';

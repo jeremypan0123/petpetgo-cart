@@ -1,6 +1,5 @@
 import { CART_ACTION } from '../constants/ActionTypes';
 import { CartItemField } from '../components/CartItem/interfaces';
-import { ProductField } from '../components/Product/interfaces';
 
 // the state of cart should contains:
 // {
