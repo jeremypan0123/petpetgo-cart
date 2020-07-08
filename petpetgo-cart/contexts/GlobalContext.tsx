@@ -1,4 +1,11 @@
-import { ReactNode, createContext, useReducer, useEffect } from 'react';
+import {
+	ReactNode,
+	Context,
+	createContext,
+	useReducer,
+	useEffect,
+	Dispatch,
+} from 'react';
 import useRootReducer from 'use-root-reducer';
 
 import {
@@ -14,8 +21,35 @@ import {
 	ADD_PRODUCT_TO_CART_ACTION,
 	DO_SOMETHING_ASYNC_ACTION,
 } from '../constants/ActionTypes';
+import { CartState, CartReducerAction } from 'reducers/cart';
+import { ErrorState, ErrorReducerAction } from 'reducers/error';
+import {
+	disableChangeAmountState,
+	DisableChangeAmountReducerAction,
+} from 'reducers/disableChangeAmount';
+import {
+	AddProductToCartState,
+	AddProductToCartReducerAction,
+} from 'reducers/addProductToCart';
 
-export const GlobalContext = createContext(null);
+interface GlobalContextValue {
+	state: {
+		cart: CartState;
+		error: ErrorState;
+		disableChangeAmount: disableChangeAmountState;
+		addProductToCart: AddProductToCartState;
+	};
+	dispatch: Dispatch<
+		| CartReducerAction
+		| DisableChangeAmountReducerAction
+		| AddProductToCartReducerAction
+		| ErrorReducerAction
+	>;
+}
+
+export const GlobalContext: Context<GlobalContextValue> = createContext<
+	GlobalContextValue
+>(null);
 
 interface GlobalContextProviderProps {
 	children: ReactNode;

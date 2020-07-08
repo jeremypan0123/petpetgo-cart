@@ -1,12 +1,14 @@
 import { DO_SOMETHING_ASYNC_ACTION } from '../constants/ActionTypes';
 
-interface Action {
+export interface DisableChangeAmountReducerAction {
 	type: DO_SOMETHING_ASYNC_ACTION;
 }
 
+export type disableChangeAmountState = boolean;
+
 export default function disableChangeAmountReducer(
-	state: boolean,
-	action: Action,
+	state: disableChangeAmountState,
+	action: DisableChangeAmountReducerAction,
 ) {
 	switch (action.type) {
 		case DO_SOMETHING_ASYNC_ACTION.DO_SOMETHING_ASYNC:

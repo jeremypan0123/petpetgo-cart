@@ -1,7 +1,7 @@
 import { ADD_PRODUCT_TO_CART_ACTION } from '../constants/ActionTypes';
 import { ProductField } from '../components/Product/interfaces';
 
-type ReducerAction =
+export type AddProductToCartReducerAction =
 	| ADD_PRODUCT_TO_CART
 	| ADD_PRODUCT_TO_CART_SUCCESS
 	| ADD_PRODUCT_TO_CART_FAILURE
@@ -38,7 +38,7 @@ interface ADD_PRODUCT_TO_CART_RESET extends Action {
 	type: ADD_PRODUCT_TO_CART_ACTION.ADD_PRODUCT_TO_CART_RESET;
 }
 
-interface AddProductToCartState {
+export interface AddProductToCartState {
 	/** 將要加入購物車的商品 */
 	product: ProductField;
 	/** 是否正在將商品加入購物車 */
@@ -49,7 +49,7 @@ interface AddProductToCartState {
 
 export default function addProductToCart(
 	state: AddProductToCartState,
-	action: ReducerAction,
+	action: AddProductToCartReducerAction,
 ): AddProductToCartState {
 	switch (action.type) {
 		case ADD_PRODUCT_TO_CART_ACTION.ADD_PRODUCT_TO_CART:

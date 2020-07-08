@@ -13,7 +13,11 @@ import { CartItemField } from '../components/CartItem/interfaces';
 //   ],
 // }
 
-type ReducerAction = ADD_ITEM | ADJUST_ITEM_AMOUNT | DELETE_ITEM | CLEAR_CART;
+export type CartReducerAction =
+	| ADD_ITEM
+	| ADJUST_ITEM_AMOUNT
+	| DELETE_ITEM
+	| CLEAR_CART;
 
 interface Action {
 	type: CART_ACTION;
@@ -53,7 +57,7 @@ export interface CartState {
 
 export default function cartReducer(
 	state: CartState,
-	action: ReducerAction,
+	action: CartReducerAction,
 ): CartState {
 	let newState: CartState, itemIndex: number;
 	switch (action.type) {
