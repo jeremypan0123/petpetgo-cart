@@ -1,2 +1,6 @@
-export { default as GlobalContextProvider } from './GlobalContext';
-export { GlobalContext } from './GlobalContext';
+export {
+	default as GlobalContextProvider,
+	GlobalContext,
+} from './GlobalContext';
+
+export { UserContextProvider, UserContext } from './UserContext';
