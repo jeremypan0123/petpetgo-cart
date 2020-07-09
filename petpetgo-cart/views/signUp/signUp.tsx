@@ -35,6 +35,7 @@ const SignUp = () => {
 	const onSubmit = useCallback(
 		async (userIdentity: UserIdentity): Promise<void> => {
 			try {
+				/** 檢查使用者資訊 */
 				await isValidIdentity(userIdentity);
 				/** 新增使用者 */
 				setUsers((prev: UserIdentity[] | null) =>
