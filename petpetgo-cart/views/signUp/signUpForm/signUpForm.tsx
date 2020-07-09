@@ -1,4 +1,4 @@
-import { FormEvent, ChangeEvent, useRef } from 'react';
+import { memo, FormEvent, ChangeEvent, useRef } from 'react';
 
 /** Component */
 import { FormGroup, InputGroup, Button } from '@blueprintjs/core';
@@ -7,7 +7,7 @@ import { FormGroup, InputGroup, Button } from '@blueprintjs/core';
 import { SignUpFormProps } from './interfaces';
 import { UserIdentity } from 'petpetgocart/contexts/UserContext/interfaces';
 
-const SignUpForm = (props: SignUpFormProps) => {
+const SignUpForm = memo((props: SignUpFormProps) => {
 	const { onSubmit } = props;
 
 	const formData = useRef<UserIdentity>({
@@ -59,6 +59,6 @@ const SignUpForm = (props: SignUpFormProps) => {
 			</Button>
 		</form>
 	);
-};
+});
 
 export default SignUpForm;
