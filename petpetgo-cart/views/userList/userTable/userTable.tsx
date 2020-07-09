@@ -1,37 +1,26 @@
-import { useCallback } from 'react';
+import { memo } from 'react';
 
 import { Cell, Column, Table } from '@blueprintjs/table';
 
 /** Interface */
 import { UserTableProps } from './interfaces';
 
-const UserTable = (props: UserTableProps) => {
+const UserTable = memo((props: UserTableProps) => {
 	const { users, deleteUser } = props;
 
-	const usernameRenderer = useCallback(
-		(rowIndex: number) => {
-			return <Cell>{users[rowIndex].username}</Cell>;
-		},
-		[users],
-	);
-
-	const phoneOrEmailRenderer = useCallback(
-		(rowIndex: number) => {
-			return <Cell>{users[rowIndex].phoneOrEmail}</Cell>;
-		},
-		[users],
-	);
-
-	const deleteRenderer = useCallback(
-		(rowIndex: number) => {
-			return (
-				<Cell>
-					<button onClick={() => deleteUser(rowIndex)}>刪除</button>
-				</Cell>
-			);
-		},
-		[deleteUser],
-	);
+	const usernameRenderer = (rowIndex: number): JSX.Element => {
+		return <Cell>{users[rowIndex].username}</Cell>;
+	};
+	const phoneOrEmailRenderer = (rowIndex: number): JSX.Element => {
+		return <Cell>{users[rowIndex].phoneOrEmail}</Cell>;
+	};
+	const deleteRenderer = (rowIndex: number): JSX.Element => {
+		return (
+			<Cell>
+				<button onClick={() => deleteUser(rowIndex)}>刪除</button>
+			</Cell>
+		);
+	};
 
 	return (
 		<Table numRows={users.length}>
@@ -40,6 +29,6 @@ const UserTable = (props: UserTableProps) => {
 			<Column name="刪除" cellRenderer={deleteRenderer} />
 		</Table>
 	);
-};
+});
 
 export default UserTable;
