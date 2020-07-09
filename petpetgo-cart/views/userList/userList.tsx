@@ -5,9 +5,8 @@ import { UserContext } from 'petpetgocart/contexts/UserContext';
 
 const UserList = () => {
 	const { users } = useContext(UserContext);
-	console.log(users);
 
-	return <UserTable />;
+	return users ? <UserTable users={users} /> : <p>無使用者</p>;
 };
 
 export default UserList;

@@ -12,15 +12,8 @@ const UserContextProvider = (props: UserContextProps) => {
 
 	const [users, setUsers] = useState<UserIdentity[]>();
 
-	/** 新增使用者 */
-	const addUser = (userIdentity: UserIdentity) => {
-		setUsers((prev) =>
-			prev ? [...prev, { ...userIdentity }] : [{ ...userIdentity }],
-		);
-	};
-
 	return (
-		<UserContext.Provider value={{ users, addUser }}>
+		<UserContext.Provider value={{ users, setUsers }}>
 			{children}
 		</UserContext.Provider>
 	);

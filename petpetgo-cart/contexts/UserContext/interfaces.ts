@@ -1,11 +1,11 @@
-import { ReactNode } from 'react';
+import { ReactNode, Dispatch, SetStateAction } from 'react';
 
 /** UserContext的interface */
 export interface UserContextValue {
 	/** 存在Context的使用者名單 */
 	users: UserIdentity[];
-	/** 加入使用者至Context */
-	addUser: (userInfo: UserIdentity) => void;
+	/** 更新使用者 */
+	setUsers: Dispatch<SetStateAction<UserIdentity[]>>;
 }
 
 export interface UserContextProps {

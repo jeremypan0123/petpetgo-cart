@@ -5,18 +5,23 @@ import SignUpForm from './signUpForm';
 
 /** Context */
 import { UserContext } from 'petpetgocart/contexts';
+
+/** Interface */
 import { UserIdentity } from 'petpetgocart/contexts/UserContext/interfaces';
 
 const SignUp = () => {
-	const { addUser } = useContext(UserContext);
+	const { setUsers } = useContext(UserContext);
 	const router = useRouter();
 
 	const onSubmit = (userIdentity: UserIdentity) => {
 		// TODO: 檢查身分是否重複、格式
 
-		/** Navigate to userList page */
-		addUser({ ...userIdentity });
+		/** 新增使用者 */
+		setUsers((prev: UserIdentity[] | null) =>
+			prev ? [...prev, { ...userIdentity }] : [{ ...userIdentity }],
+		);
 
+		/** Navigate to userList page */
 		router.push('/users/userList');
 	};
 

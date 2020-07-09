@@ -1,12 +1,23 @@
 import { Cell, Column, Table } from '@blueprintjs/table';
 
-const cellRenderer = (rowIndex: number) => {
-	return <Cell>{`$${(rowIndex * 10).toFixed(2)}`}</Cell>;
-};
-const UserTable = () => {
+/** Interface */
+import { UserTableProps } from './interfaces';
+
+const UserTable = (props: UserTableProps) => {
+	const { users } = props;
+
+	const usernameRenderer = (rowIndex: number) => {
+		return <Cell>{users[rowIndex].username}</Cell>;
+	};
+
+	const phoneOrEmailRenderer = (rowIndex: number) => {
+		return <Cell>{users[rowIndex].phoneOrEmail}</Cell>;
+	};
+
 	return (
-		<Table numRows={10}>
-			<Column name="Dollars" cellRenderer={cellRenderer} />
+		<Table numRows={users.length}>
+			<Column name="使用者" cellRenderer={usernameRenderer} />
+			<Column name="電話 / Email" cellRenderer={phoneOrEmailRenderer} />
 		</Table>
 	);
 };
