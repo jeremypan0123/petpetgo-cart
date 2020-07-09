@@ -1,4 +1,4 @@
-import { memo, FormEvent, ChangeEvent, useRef } from 'react';
+import { memo, useState, FormEvent, ChangeEvent, useRef } from 'react';
 
 /** Component */
 import { FormGroup, InputGroup, Button } from '@blueprintjs/core';
@@ -9,6 +9,8 @@ import { UserIdentity } from 'petpetgocart/contexts/UserContext/interfaces';
 
 const SignUpForm = memo((props: SignUpFormProps) => {
 	const { onSubmit } = props;
+
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const formData = useRef<UserIdentity>({
 		username: '',
@@ -30,10 +32,12 @@ const SignUpForm = memo((props: SignUpFormProps) => {
 	};
 
 	/** 註冊 */
-	const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+		setLoading(true);
 		e.preventDefault();
 
-		onSubmit(formData.current);
+		await onSubmit(formData.current);
+		setLoading(false);
 	};
 
 	return (
@@ -54,7 +58,7 @@ const SignUpForm = memo((props: SignUpFormProps) => {
 				/>
 			</FormGroup>
 
-			<Button type="submit" icon="log-in">
+			<Button type="submit" icon="log-in" disabled={loading}>
 				{'註冊'}
 			</Button>
 		</form>

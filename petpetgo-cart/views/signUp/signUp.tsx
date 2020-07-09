@@ -10,25 +10,53 @@ import { UserContext } from 'petpetgocart/contexts';
 import { UserIdentity } from 'petpetgocart/contexts/UserContext/interfaces';
 
 const SignUp = () => {
-	const { setUsers } = useContext(UserContext);
+	const { users, setUsers } = useContext(UserContext);
 	// const router = useRouter();
 
-	const onSubmit = useCallback(
-		(userIdentity: UserIdentity): void => {
-			// TODO: 檢查身分是否重複、格式
+	/** 確認使用者輸入的資料為合法 */
+	const isValidIdentity = useCallback(
+		(userIdentity: UserIdentity): Promise<ValidationStatus> => {
+			return new Promise((resolve, reject) => {
+				const _findUser = users.find(
+					(user) =>
+						user.username === userIdentity.username &&
+						user.phoneOrEmail === userIdentity.phoneOrEmail,
+				);
+				if (!_findUser) {
+					resolve({ status: 'Success' });
+				} else {
+					reject({ status: 'Failure', errorMessage: '重複的帳號' });
+				}
+			});
+		},
+		[users],
+	);
 
-			/** 新增使用者 */
-			setUsers((prev: UserIdentity[] | null) =>
-				prev ? [...prev, { ...userIdentity }] : [{ ...userIdentity }],
-			);
+	const onSubmit = useCallback(
+		async (userIdentity: UserIdentity): Promise<void> => {
+			try {
+				await isValidIdentity(userIdentity);
+				/** 新增使用者 */
+				setUsers((prev: UserIdentity[] | null) =>
+					prev ? [...prev, { ...userIdentity }] : [{ ...userIdentity }],
+				);
+			} catch (error) {
+				console.log(error.errorMessage);
+			}
 
 			// /** Navigate to userList page */
 			// router.push('/users/userList');
 		},
-		[setUsers],
+		[setUsers, isValidIdentity],
 	);
 
 	return <SignUpForm onSubmit={onSubmit} />;
 };
+
+type Status = 'Success' | 'Failure';
+interface ValidationStatus {
+	status: Status;
+	errorMessage?: string;
+}
 
 export default SignUp;
