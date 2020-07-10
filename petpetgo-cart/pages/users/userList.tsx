@@ -5,7 +5,7 @@ const UserListPage = () => {
 	return (
 		<>
 			<SignUpView />
-			<UserListView />;
+			<UserListView />
 		</>
 	);
 };

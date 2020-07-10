@@ -9,6 +9,8 @@ import { UserContext } from 'petpetgocart/contexts';
 /** Interface */
 import { UserIdentity } from 'petpetgocart/contexts/UserContext/interfaces';
 
+import styles from './signUp.module.scss';
+
 const SignUp = () => {
 	const { users, setUsers } = useContext(UserContext);
 	// const router = useRouter();
@@ -17,12 +19,12 @@ const SignUp = () => {
 	const isValidIdentity = useCallback(
 		(userIdentity: UserIdentity): Promise<ValidationStatus> => {
 			return new Promise((resolve, reject) => {
-				const _findUser = users.find(
+				const _userFind = users.find(
 					(user) =>
 						user.username === userIdentity.username &&
 						user.phoneOrEmail === userIdentity.phoneOrEmail,
 				);
-				if (!_findUser) {
+				if (!_userFind) {
 					resolve({ status: 'Success' });
 				} else {
 					reject({ status: 'Failure', errorMessage: '重複的帳號' });
@@ -51,7 +53,13 @@ const SignUp = () => {
 		[setUsers, isValidIdentity],
 	);
 
-	return <SignUpForm onSubmit={onSubmit} />;
+	return (
+		<div className={styles.signup}>
+			<div className={styles.signup__wrapper}>
+				<SignUpForm onSubmit={onSubmit} />
+			</div>
+		</div>
+	);
 };
 
 type Status = 'Success' | 'Failure';
